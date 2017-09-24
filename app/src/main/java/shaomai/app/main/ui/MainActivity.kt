@@ -4,7 +4,6 @@ import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
-import android.widget.FrameLayout
 import shaomai.app.R
 
 /**
@@ -14,7 +13,6 @@ import shaomai.app.R
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainTab: TabLayout
-    private lateinit var mainFrag: FrameLayout
 
     val home = HomeFragment()
     val collection = Fragment()
@@ -49,6 +47,8 @@ class MainActivity : AppCompatActivity() {
                                 tab.setIcon(R.mipmap.mine_gray)
                             }
                         }
+                        fragmentManager
+                                .popBackStackImmediate();
                     }
 
                     override fun onTabSelected(tab: TabLayout.Tab?) {
