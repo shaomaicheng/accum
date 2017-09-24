@@ -33,6 +33,8 @@ dependencies {
 
     //support design
     compile 'com.android.support:design:26.1.0'
+    // youzan titan recyclerview
+    compile 'com.youzan:titan:0.3.0'
 
 }
 repositories {

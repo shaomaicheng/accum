@@ -1,15 +1,26 @@
-package shaomai.app.main
+package shaomai.app.main.ui
 
+import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import shaomai.app.R
 
+/**
+ * main Activity
+ * create by chenglei
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainTab: TabLayout
     private lateinit var mainFrag: FrameLayout
+
+    val home = HomeFragment()
+    val collection = Fragment()
+    val mine = Fragment()
+
+    val frags = listOf<Fragment>(home, collection, mine)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initViewsAndEvents() {
+        fragmentManager.beginTransaction().replace(R.id.main_frag, frags[0]).commit()
         mainTab
                 .apply { addTab(newTab().apply { setText(R.string.home) }.setIcon(R.mipmap.home)) }
                 .apply { addTab(newTab().apply { setText(R.string.collection) }.setIcon(R.mipmap.collection_gray)) }
@@ -51,6 +63,11 @@ class MainActivity : AppCompatActivity() {
                                 tab.setIcon(R.mipmap.mine)
                             }
                         }
+                        fragmentManager
+                                .beginTransaction()
+                                .replace(R.id.main_frag, frags[tab?.position as Int])
+                                .commit()
+
                     }
 
                     override fun onTabReselected(tab: TabLayout.Tab?) {
