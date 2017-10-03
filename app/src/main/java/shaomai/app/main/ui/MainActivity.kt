@@ -15,9 +15,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainTab: TabLayout
 
     val home = HomeFragment()
-    val collection = Fragment()
-    val mine = Fragment()
-
+    val collection = CollectionFragment()
+    val mine = MineFragment()
     val frags = listOf<Fragment>(home, collection, mine)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initViewsAndEvents() {
-        fragmentManager.beginTransaction().replace(R.id.main_frag, frags[0]).commit()
+        fragmentManager.beginTransaction().add(R.id.main_frag, frags[0], "0").commit()
         mainTab
                 .apply { addTab(newTab().apply { setText(R.string.home) }.setIcon(R.mipmap.home)) }
                 .apply { addTab(newTab().apply { setText(R.string.collection) }.setIcon(R.mipmap.collection_gray)) }
@@ -37,37 +36,46 @@ class MainActivity : AppCompatActivity() {
                 .addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     override fun onTabUnselected(tab: TabLayout.Tab?) {
                         when (tab?.position) {
-                            0->{
+                            0 -> {
                                 tab.setIcon(R.mipmap.home_gray)
                             }
-                            1->{
+                            1 -> {
                                 tab.setIcon(R.mipmap.collection_gray)
                             }
-                            2->{
+                            2 -> {
                                 tab.setIcon(R.mipmap.mine_gray)
                             }
                         }
-                        fragmentManager
-                                .popBackStackImmediate();
                     }
 
                     override fun onTabSelected(tab: TabLayout.Tab?) {
-                        when(tab?.position) {
-                            0-> {
+                        when (tab?.position) {
+                            0 -> {
                                 tab.setIcon(R.mipmap.home)
                             }
-                            1-> {
+                            1 -> {
                                 tab.setIcon(R.mipmap.collection)
                             }
-                            2->{
+                            2 -> {
                                 tab.setIcon(R.mipmap.mine)
                             }
                         }
-                        fragmentManager
-                                .beginTransaction()
-                                .replace(R.id.main_frag, frags[tab?.position as Int])
-                                .commit()
-
+                        frags.all {
+                            fragmentManager.beginTransaction().hide(it).commit()
+                            true
+                        }
+                        if (fragmentManager.findFragmentByTag((tab?.position as Int).toString()) == null) {
+                            fragmentManager
+                                    .beginTransaction()
+                                    .add(R.id.main_frag, frags[tab.position], tab.position.toString())
+                                    .show(frags[tab.position])
+                                    .commit()
+                        } else {
+                            fragmentManager
+                                    .beginTransaction()
+                                    .show(frags[tab.position])
+                                    .commit()
+                        }
                     }
 
                     override fun onTabReselected(tab: TabLayout.Tab?) {
