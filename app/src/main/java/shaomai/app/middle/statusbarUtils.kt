@@ -119,7 +119,11 @@ inline fun AppCompatActivity.statusBarLightMode(type: Int) {
     when(type){
         1->{MIUISetStatusBarLightMode(true)}
         2->{flymeSetStatusBarLightMode(true)}
-        3->{window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR}
+        3->{
+            window.decorView.systemUiVisibility =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    else View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
     }
 }
 
@@ -138,5 +142,27 @@ inline fun AppCompatActivity.lightStatusBar(): Int {
         }
     }
     return res
+}
+
+inline fun AppCompatActivity.darkStatusBar(): Int {
+    var res = 0
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (MIUISetStatusBarLightMode(false)) {
+            res = 1
+        } else if (flymeSetStatusBarLightMode(false)) {
+            res = 2
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+            res = 3
+        }
+    }
+    return res
+}
+
+inline fun AppCompatActivity.isColorDark(color: Int): Boolean {
+    if (Color.red(color) == 0xF && Color.green(color) == 0xF && Color.blue(color) == 0xF) {
+        return false
+    }
+    return 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255 >= 0.5
 }
 
