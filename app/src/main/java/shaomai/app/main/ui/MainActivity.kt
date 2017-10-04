@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import shaomai.app.R
+import shaomai.app.middle.lightStatusBar
+import shaomai.app.middle.statusBarLightMode
 
 /**
  * main Activity
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        statusBarLightMode(lightStatusBar())
         setContentView(R.layout.activity_main)
 
         mainTab = findViewById(R.id.main_tab)
