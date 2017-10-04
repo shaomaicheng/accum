@@ -22,10 +22,12 @@ import com.readystatesoftware.systembartint.SystemBarTintManager
 inline fun AppCompatActivity.transparencyBar() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         window
-                .apply { clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) }
-                .apply { decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE }
-                .apply { addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) }
-                .apply { statusBarColor = Color.TRANSPARENT }
+                .apply {
+                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    statusBarColor = Color.TRANSPARENT
+                }
     } else {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -39,9 +41,10 @@ inline fun AppCompatActivity.transparencyBar() {
  */
 inline fun AppCompatActivity.setStatusBarColor(color:Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        window
-                .apply { addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) }
-                .apply { statusBarColor = ContextCompat.getColor(this as Context, color) }
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = ContextCompat.getColor(this as Context, color)
+        }
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
         transparencyBar()
         val tintManager = SystemBarTintManager(this)
