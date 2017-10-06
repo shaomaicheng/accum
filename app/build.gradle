@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "shaomai.app"
         minSdkVersion 18
@@ -42,7 +42,13 @@ dependencies {
     kapt 'com.android.databinding:compiler:2.3.3'
     //system bar
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-
+    // archive component
+    implementation "android.arch.lifecycle:runtime:1.0.0"
+    implementation "android.arch.lifecycle:extensions:1.0.0-beta1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-beta1"
+    implementation "android.arch.persistence.room:runtime:1.0.0-beta1"
+    implementation "android.arch.persistence.room:runtime:1.0.0-beta1"
+    implementation "android.arch.persistence.room:rxjava2:1.0.0-beta1"
 }
 
 kapt {

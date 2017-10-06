@@ -1,10 +1,7 @@
 package shaomai.app.common.ui
 
-import android.annotation.TargetApi
-import android.app.Fragment
-import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import shaomai.app.R
@@ -18,33 +15,32 @@ import shaomai.app.middle.statusBarLightMode
  */
 
 open abstract class ToolbarActivity : AppCompatActivity() {
-    lateinit var mToolbar: Toolbar
+    var mToolbar: Toolbar? = null
 
     var title:String
         get(): String {
-            return mToolbar.title.toString()
+            return mToolbar?.title.toString()
         }
         set(value) {
-            mToolbar.title = value
+            mToolbar?.title = value
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initWindow()
         setContentView(R.layout.activity_toolbar)
-        fragmentManager
+        mToolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(mToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_toolbar_activity, replaceFragment())
                 .commit()
+        initViewsAndEvent()
     }
 
     private fun initWindow() {
         statusBarLightMode(lightStatusBar())
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun setStatusBarColor() {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
     }
 
     abstract fun replaceFragment(): Fragment

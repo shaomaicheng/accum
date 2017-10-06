@@ -1,6 +1,6 @@
 package shaomai.app.home.ui
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import shaomai.app.R
 import shaomai.app.common.ui.ToolbarActivity
 
