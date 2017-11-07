@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         initViewsAndEvents()
     }
 
-    fun initViewsAndEvents() {
+    private fun initViewsAndEvents() {
         fragmentManager.beginTransaction().add(R.id.main_frag, frags[0], "0").commit()
         mainTab.apply {
             addTab(newTab().apply { setText(R.string.home) }.setIcon(R.mipmap.home))

@@ -22,7 +22,7 @@
         android:gravity="center"
         android:hint="@string/translate_content_want"
         android:longClickable="false"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="@android:color/tertiary_text_dark"
         android:textSize="18sp"
         app:layout_collapseMode="none" />
 

@@ -25,7 +25,7 @@ class TranslateFragment : LifecycleFragment() {
     private lateinit var translateInputView:EditText
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mBinding = DataBindingUtil.inflate<FragTranslationBinding>(inflater,R.layout.frag_translation,container,false)
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.frag_translation,container,false)
         return mBinding.root
     }
 
@@ -52,7 +52,7 @@ class TranslateFragment : LifecycleFragment() {
 
     private fun subscribeUI() {
         viewModel.mObservableTranslated.observe(this, Observer { content->
-            viewModel.mResult.set(viewModel.translate(content))
+            viewModel.translate(content)
         })
     }
 }

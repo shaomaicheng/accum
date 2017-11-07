@@ -9,7 +9,7 @@ import shaomai.app.R
 
 /**
  *  created by chenglei on 2017/10/3.
- *  @describe
+ *  @describe 我的
  */
 class MineFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
