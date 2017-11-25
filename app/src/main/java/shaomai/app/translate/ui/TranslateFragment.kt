@@ -1,4 +1,4 @@
-package shaomai.app.home.ui
+package shaomai.app.translate.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import shaomai.app.R
 import shaomai.app.databinding.FragTranslationBinding
-import shaomai.app.home.viewmodel.TranslateViewModel
+import shaomai.app.translate.viewmodel.TranslateViewModel
 
 /**
  *  created by chenglei on 2017/9/24.

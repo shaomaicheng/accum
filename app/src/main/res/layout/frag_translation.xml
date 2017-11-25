@@ -5,7 +5,7 @@
   <data>
     <variable
       name="translateModel"
-      type="shaomai.app.home.viewmodel.TranslateViewModel"/>
+      type="shaomai.app.translate.viewmodel.TranslateViewModel"/>
   </data>
   <LinearLayout
     android:orientation="vertical"

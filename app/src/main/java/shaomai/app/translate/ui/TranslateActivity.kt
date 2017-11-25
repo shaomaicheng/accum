@@ -1,4 +1,4 @@
-package shaomai.app.home.ui
+package shaomai.app.translate.ui
 
 import android.support.v4.app.Fragment
 import shaomai.app.R

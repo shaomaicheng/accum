@@ -1,4 +1,4 @@
-package shaomai.app.home.network.response
+package shaomai.app.translate.network.response
 
 import com.google.gson.annotations.SerializedName
 import shaomai.app.middle.network.BaseResponse

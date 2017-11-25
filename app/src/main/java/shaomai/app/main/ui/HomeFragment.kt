@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import shaomai.app.R
-import shaomai.app.home.ui.TranslateActivity
+import shaomai.app.translate.ui.TranslateActivity
 
 /**
  *  created by chenglei on 2017/9/24.

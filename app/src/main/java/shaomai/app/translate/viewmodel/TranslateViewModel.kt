@@ -1,15 +1,13 @@
-package shaomai.app.home.viewmodel
+package shaomai.app.translate.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableField
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Toast
 import kotlinx.coroutines.experimental.async
-import shaomai.app.AccumApplication
-import shaomai.app.home.network.TranslateService
-import shaomai.app.home.network.response.TranslateResponse
+import shaomai.app.translate.network.TranslateService
+import shaomai.app.translate.network.response.TranslateResponse
 import shaomai.app.middle.Result
 import shaomai.app.middle.await
 import shaomai.app.middle.network.createService
