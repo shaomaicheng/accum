@@ -15,12 +15,10 @@ import shaomai.app.middle.statusBarLightMode
  */
 
 open abstract class ToolbarActivity : AppCompatActivity() {
-    var mToolbar: Toolbar? = null
+    private var mToolbar: Toolbar? = null
 
     var title:String
-        get(): String {
-            return mToolbar?.title.toString()
-        }
+        get(): String = mToolbar?.title.toString()
         set(value) {
             mToolbar?.title = value
         }

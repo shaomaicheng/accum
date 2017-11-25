@@ -1,6 +1,7 @@
 package shaomai.app
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 
 /**
  *  created by chenglei on 2017/10/6.
@@ -15,5 +16,6 @@ class AccumApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
     }
 }

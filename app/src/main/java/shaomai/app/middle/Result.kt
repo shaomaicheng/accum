@@ -9,9 +9,6 @@ import shaomai.app.middle.network.BaseResponse
  */
 
 sealed class Result<T: BaseResponse> {
-
-
-
     class OK<T: BaseResponse>(
         val value: T,
         val response: Response

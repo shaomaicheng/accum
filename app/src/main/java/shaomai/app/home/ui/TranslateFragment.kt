@@ -1,10 +1,10 @@
 package shaomai.app.home.ui
 
-import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ import shaomai.app.home.viewmodel.TranslateViewModel
  *  created by chenglei on 2017/9/24.
  *  @describe
  */
-class TranslateFragment : LifecycleFragment() {
+class TranslateFragment : Fragment() {
     private lateinit var mBinding: FragTranslationBinding
     private lateinit var viewModel: TranslateViewModel
     private lateinit var translateInputView:EditText

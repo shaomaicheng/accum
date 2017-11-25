@@ -12,9 +12,7 @@ import shaomai.app.common.ui.ToolbarActivity
 
 class TranslateActivity : ToolbarActivity() {
 
-    override fun replaceFragment(): Fragment {
-        return TranslateFragment()
-    }
+    override fun replaceFragment(): Fragment = TranslateFragment()
 
     override fun initViewsAndEvent() {
         title = getString(R.string.translate_content_want)
