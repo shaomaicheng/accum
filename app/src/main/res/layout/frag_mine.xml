@@ -44,6 +44,8 @@
             app:title="地点"
             app:content="@{user_info.provice + user_info.city + user_info.country + user_info.address}"/>
 
+        <View
+            style="@style/horizontal_line"/>
 
         <shaomai.app.common.ui.ItemView
             android:layout_width="match_parent"
