@@ -1,8 +1,8 @@
 package shaomai.app.main.ui
 
-import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import shaomai.app.R
 import shaomai.app.middle.*
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     val home = HomeFragment()
     val collection = CollectionFragment()
     val mine = MineFragment()
-    val frags = listOf<Fragment>(home, collection, mine)
+    val frags = listOf(home, collection, mine)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewsAndEvents() {
-        fragmentManager.beginTransaction().add(R.id.main_frag, frags[0], "0").commit()
+        supportFragmentManager.beginTransaction().add(R.id.main_frag, frags[0], "0").commit()
         mainTab.apply {
             addTab(newTab().apply { setText(R.string.home) }.setIcon(R.mipmap.home))
             addTab(newTab().apply { setText(R.string.collection) }.setIcon(R.mipmap.collection_gray))
@@ -68,17 +68,17 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 frags.all {
-                    fragmentManager.beginTransaction().hide(it).commit()
+                    supportFragmentManager.beginTransaction().hide(it).commit()
                     true
                 }
-                if (fragmentManager.findFragmentByTag((tab?.position as Int).toString()) == null) {
-                    fragmentManager
+                if (supportFragmentManager.findFragmentByTag((tab?.position as Int).toString()) == null) {
+                    supportFragmentManager
                             .beginTransaction()
                             .add(R.id.main_frag, frags[tab.position], tab.position.toString())
                             .show(frags[tab.position])
                             .commit()
                 } else {
-                    fragmentManager
+                    supportFragmentManager
                             .beginTransaction()
                             .show(frags[tab.position])
                             .commit()
