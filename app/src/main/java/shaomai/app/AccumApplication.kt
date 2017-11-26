@@ -1,6 +1,7 @@
 package shaomai.app
 
 import android.app.Application
+import com.avos.avoscloud.AVOSCloud
 import com.facebook.stetho.Stetho
 
 /**
@@ -17,5 +18,9 @@ class AccumApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
+        AVOSCloud.initialize(this, "C5GwCBeeMdNjUau8JsQge7FB-gzGzoHsz",
+                "xYJaKw4eDTIkWGzMMK30zKwq")
+        AVOSCloud.setDebugLogEnabled(true)
+
     }
 }

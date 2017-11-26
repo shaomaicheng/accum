@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="type_sign"
+            type="boolean" />
+        <variable
+            name="phone"
+            type="String"/>
+        <variable
+            name="password"
+            type="String"/>
+        <variable
+            name="interval"
+            type="int"/>
+        <variable
+            name="visible"
+            type="int"/>
+        <variable
+            name="gone"
+            type="int"
+            />
+        <variable
+            name="code"
+            type="String"/>
+
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:text='@{type_sign ? @string/sign_up: @string/login}'
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"/>
+
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:inputType='number'
+            android:hint='@{type_sign? @string/input_user : @string/input_phone}'
+            android:text="@{phone}"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:inputType="textPassword"
+            android:hint="请输入密码"
+            android:text="@{password}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:visibility="@{type_sign? visible: gone}">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="验证码"
+                android:inputType="number"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:gravity="center|left"
+                android:text="@{code}"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center|left"
+                android:text='@{interval + @string/interval_sign_up}'/>
+        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:text="@{type_sign? @string/sign_up : @string/login}"
+            android:gravity="center"
+            />
+    </LinearLayout>
+</layout>

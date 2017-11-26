@@ -1,10 +1,13 @@
 package shaomai.app.main.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.avos.avoscloud.AVUser
 import shaomai.app.R
+import shaomai.app.account.SignupActivity
 import shaomai.app.middle.*
 
 /**
@@ -22,6 +25,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var avuser = AVUser.getCurrentUser()
+        if (avuser == null) {
+            var intent = Intent(this, SignupActivity::class.java)
+            //登录
+            intent.putExtra("sign_type", false)
+            startActivity(intent)
+            finish()
+        }
 //        if (!isColorDark(R.color.colorPrimaryDark)){
 //            statusBarLightMode(lightStatusBar())
 //        } else{
