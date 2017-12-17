@@ -74,7 +74,7 @@
             android:layout_marginTop="20dp"
             android:hint='@{viewmodel.signupType? @string/input_user : @string/input_phone}'
             android:inputType='number'
-            android:text="@{phone}" />
+            android:text="@={phone}" />
 
         <EditText
             style="@style/ui_item_account"
@@ -83,7 +83,7 @@
             android:layout_marginTop="8dp"
             android:hint="请输入密码"
             android:inputType="textPassword"
-            android:text="@{password}" />
+            android:text="@={password}" />
 
         <LinearLayout
             style="@style/ui_item_account"
@@ -102,7 +102,7 @@
                 android:inputType="number"
                 android:maxLength="4"
                 android:maxLines="1"
-                android:text="@{code}" />
+                android:text="@={code}" />
 
             <TextView
                 android:layout_width="0dp"
@@ -120,6 +120,7 @@
             android:background="@drawable/bg_common_btn"
             android:gravity="center"
             android:text="@{viewmodel.signupType? @string/sign_up : @string/login}"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:onClick="clickSign"/>
     </LinearLayout>
 </layout>
