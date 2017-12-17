@@ -13,4 +13,7 @@
   <string name="interval_sign_up">秒后重发</string>
   <string name="input_user">请输入用户名</string>
   <string name="input_phone">请输入手机号码</string>
+
+  <string name="goto_login">去登录</string>
+  <string name="goto_signup">去注册</string>
 </resources>

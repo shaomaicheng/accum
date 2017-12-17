@@ -5,4 +5,13 @@
   <!--<color name="colorPrimaryDark">#000000</color>-->
   <color name="colorAccent">#1ab20a</color>
   <color name="common_bg">#f1f1f1</color>
+
+
+  <color name="dark_green">#00CD66</color>
+
+
+  <!-- white -->
+  <color name="white">#fff</color>
+  <!-- black -->
+  <color name="black">#000</color>
 </resources>

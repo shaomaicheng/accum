@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
-        <variable
-            name="type_sign"
-            type="boolean" />
+
         <variable
             name="phone"
-            type="String"/>
+            type="String" />
+
         <variable
             name="password"
-            type="String"/>
+            type="String" />
+
         <variable
             name="interval"
-            type="int"/>
+            type="int" />
+
         <variable
             name="visible"
-            type="int"/>
+            type="int" />
+
         <variable
             name="gone"
-            type="int"
-            />
+            type="int" />
+
         <variable
             name="code"
-            type="String"/>
+            type="String" />
+
+        <variable
+            name="viewmodel"
+            type="shaomai.app.account.viewmodel.SignupViewModel"/>
 
     </data>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -41,57 +48,78 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:text='@{type_sign ? @string/sign_up: @string/login}'
                 android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"/>
+                android:text='@{viewmodel.signupType ? @string/sign_up: @string/login}'
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:onClick="@{()-> viewmodel.clickSwitchSign()}"
+                android:text="@{viewmodel.signupType ? @string/goto_login : @string/goto_signup}"/>
 
         </RelativeLayout>
 
         <EditText
+            style="@style/ui_item_account"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
+            android:hint='@{viewmodel.signupType? @string/input_user : @string/input_phone}'
             android:inputType='number'
-            android:hint='@{type_sign? @string/input_user : @string/input_phone}'
-            android:text="@{phone}"/>
+            android:text="@{phone}" />
+
         <EditText
+            style="@style/ui_item_account"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
-            android:inputType="textPassword"
             android:hint="请输入密码"
-            android:text="@{password}"/>
+            android:inputType="textPassword"
+            android:text="@{password}" />
 
         <LinearLayout
+            style="@style/ui_item_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:visibility="@{type_sign? visible: gone}">
+            android:visibility="@{viewmodel.signupType? visible: gone}">
+
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center|left"
                 android:hint="验证码"
                 android:inputType="number"
                 android:maxLength="4"
                 android:maxLines="1"
-                android:gravity="center|left"
-                android:text="@{code}"/>
+                android:text="@{code}" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="center|left"
-                android:text='@{interval + @string/interval_sign_up}'/>
+                android:text='@{interval + @string/interval_sign_up}' />
         </LinearLayout>
+
         <Button
+            style="@style/ui_item_account"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
-            android:text="@{type_sign? @string/sign_up : @string/login}"
+            android:background="@drawable/bg_common_btn"
             android:gravity="center"
-            />
+            android:text="@{viewmodel.signupType? @string/sign_up : @string/login}"
+            android:textColor="@color/white" />
     </LinearLayout>
 </layout>

@@ -3,12 +3,12 @@ package shaomai.app.main.ui
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.avos.avoscloud.AVUser
 import shaomai.app.R
-import shaomai.app.account.SignupActivity
-import shaomai.app.middle.*
+import shaomai.app.account.ui.SignupActivity
+import shaomai.app.middle.lightStatusBar
+import shaomai.app.middle.statusBarLightMode
 
 /**
  * main Activity
