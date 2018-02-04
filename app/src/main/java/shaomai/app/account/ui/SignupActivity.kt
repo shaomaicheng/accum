@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import org.jetbrains.anko.toast
 import shaomai.app.R
+import shaomai.app.account.constant.KEY_SIGN_TYPE
 import shaomai.app.account.viewmodel.SignupViewModel
 import shaomai.app.databinding.ActivitySignupBinding
 import shaomai.app.middle.lightStatusBar
@@ -31,7 +32,7 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         statusBarLightMode(lightStatusBar())
 
-        typeSign = intent.getBooleanExtra("sign_type", false)
+        typeSign = intent.getBooleanExtra(KEY_SIGN_TYPE, false)
 
 
         viewModel = ViewModelProviders.of(this).get(SignupViewModel::class.java)

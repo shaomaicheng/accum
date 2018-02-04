@@ -23,14 +23,19 @@ class MainActivity : AppCompatActivity() {
     val mine = MineFragment()
     val frags = listOf(home, collection, mine)
 
+
+    companion object {
+        val KEY_SIGN_TYPE = "key_sign_type"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var avuser = AVUser.getCurrentUser()
+        val avuser = AVUser.getCurrentUser()
         if (avuser == null) {
-            var intent = Intent(this, SignupActivity::class.java)
+            val intent = Intent(this, SignupActivity::class.java)
             //登录
-            intent.putExtra("sign_type", false)
+            intent.putExtra(KEY_SIGN_TYPE, false)
             startActivity(intent)
             finish()
         }

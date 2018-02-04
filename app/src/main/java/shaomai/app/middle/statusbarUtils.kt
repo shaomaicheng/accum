@@ -17,9 +17,21 @@ import com.readystatesoftware.systembartint.SystemBarTintManager
  */
 
 /**
+ * 是否是深颜色
+ */
+fun isColorDark(color: Int): Boolean {
+    if (Color.red(color) == 0xF
+            && Color.green(color) == 0xF
+            && Color.blue(color) == 0xF) {
+        return false
+    }
+    return 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255 >= 0.5
+}
+
+/**
  * 修改状态栏为全透明
  */
-inline fun AppCompatActivity.transparencyBar() {
+fun AppCompatActivity.transparencyBar() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         window
                 .apply {
@@ -39,7 +51,7 @@ inline fun AppCompatActivity.transparencyBar() {
 /**
  * 设置状态栏颜色
  */
-inline fun AppCompatActivity.setStatusBarColor(color:Int) {
+fun AppCompatActivity.setStatusBarColor(color: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -57,26 +69,20 @@ inline fun AppCompatActivity.setStatusBarColor(color:Int) {
  * 如果是小米系统，是否为亮色的状态栏
  * @param dark true代表是，false代表不是
  */
-inline fun AppCompatActivity.MIUISetStatusBarLightMode(dark: Boolean): Boolean {
+fun AppCompatActivity.MIUISetStatusBarLightMode(dark: Boolean): Boolean {
     var res = false
     window?.let {
-        try {
-            var clazz: Class<Window> = window.javaClass
-            var darkModeFlag = 0
-            var lp = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
-            var field = lp.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE")
-            darkModeFlag = field.getInt(lp)
-            var extraFlagField = clazz.getMethod("setExtraFlags", Int::class.java, Int::class.java)
-            if (dark) {
-                extraFlagField.invoke(window, darkModeFlag, darkModeFlag)
-            } else {
-                extraFlagField.invoke(window, 0, darkModeFlag)
-            }
-            res = true
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                window.decorView.systemUiVisibility = if (dark) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else View.SYSTEM_UI_FLAG_VISIBLE
-            }else{}
-        } catch (e: Exception) {
+        val clazz: Class<Window> = window.javaClass
+        var darkModeFlag = 0
+        val lp = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
+        val field = lp.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE")
+        darkModeFlag = field.getInt(lp)
+        val extraFlagField = clazz.getMethod("setExtraFlags", Int::class.java, Int::class.java)
+        extraFlagField.invoke(window, if (dark) 0 else darkModeFlag, darkModeFlag)
+        res = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility =
+                    if (dark) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else View.SYSTEM_UI_FLAG_VISIBLE
         }
     }
     return res
@@ -85,41 +91,47 @@ inline fun AppCompatActivity.MIUISetStatusBarLightMode(dark: Boolean): Boolean {
 /**
  * 如果是魅族的flyme系统，是否是亮色状态栏
  */
-inline fun AppCompatActivity.flymeSetStatusBarLightMode(dark: Boolean): Boolean {
+fun AppCompatActivity.flymeSetStatusBarLightMode(dark: Boolean): Boolean {
     var res = false
     window?.let {
-        try {
-            var lp = window.attributes
-            var darkFlag = WindowManager.LayoutParams::class.java.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
-            var meizuFlags = WindowManager.LayoutParams::class.java.getDeclaredField("meizuFlags")
-            darkFlag.isAccessible = true
-            meizuFlags.isAccessible = true
-            var bit = darkFlag.getInt(null)
-            var value = meizuFlags.getInt(lp)
-            value = if (dark) value or bit else value and bit.inv()
-            meizuFlags.setInt(lp, value)
-            window.attributes = lp
-            res = true
-        } catch (e: Exception) {
-        }
+        val lp = window.attributes
+        val darkFlag = WindowManager.LayoutParams::class.java.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
+        val meizuFlags = WindowManager.LayoutParams::class.java.getDeclaredField("meizuFlags")
+        darkFlag.isAccessible = true
+        meizuFlags.isAccessible = true
+        val bit = darkFlag.getInt(null)
+        var value = meizuFlags.getInt(lp)
+        value = if (dark) value or bit else value and bit.inv()
+        meizuFlags.setInt(lp, value)
+        window.attributes = lp
+        res = true
     }
     return res
 }
 
-
-inline fun AppCompatActivity.statusBarDarkMode(type: Int) {
-    when(type) {
-        1->{MIUISetStatusBarLightMode(false)}
-        2->{flymeSetStatusBarLightMode(false)}
-        3->{window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE}
+fun AppCompatActivity.statusBarDarkMode(type: Int) {
+    when (type) {
+        1 -> {
+            MIUISetStatusBarLightMode(false)
+        }
+        2 -> {
+            flymeSetStatusBarLightMode(false)
+        }
+        3 -> {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        }
     }
 }
 
-inline fun AppCompatActivity.statusBarLightMode(type: Int) {
-    when(type){
-        1->{MIUISetStatusBarLightMode(true)}
-        2->{flymeSetStatusBarLightMode(true)}
-        3->{
+fun AppCompatActivity.statusBarLightMode(type: Int) {
+    when (type) {
+        1 -> {
+            MIUISetStatusBarLightMode(true)
+        }
+        2 -> {
+            flymeSetStatusBarLightMode(true)
+        }
+        3 -> {
             window.decorView.systemUiVisibility =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     else View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -128,41 +140,33 @@ inline fun AppCompatActivity.statusBarLightMode(type: Int) {
 }
 
 
-
-inline fun AppCompatActivity.lightStatusBar(): Int {
+fun AppCompatActivity.lightStatusBar(): Int {
     var res = 0
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        if (MIUISetStatusBarLightMode(true)){
-            res = 1
-        } else if (flymeSetStatusBarLightMode(true)) {
-            res = 2
-        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            res = 3
+        when {
+            MIUISetStatusBarLightMode(true) -> res = 1
+            flymeSetStatusBarLightMode(true) -> res = 2
+            Build.VERSION.SDK_INT > Build.VERSION_CODES.M -> {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                res = 3
+            }
         }
     }
     return res
 }
 
-inline fun AppCompatActivity.darkStatusBar(): Int {
+fun AppCompatActivity.darkStatusBar(): Int {
     var res = 0
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        if (MIUISetStatusBarLightMode(false)) {
-            res = 1
-        } else if (flymeSetStatusBarLightMode(false)) {
-            res = 2
-        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-            res = 3
+        when {
+            MIUISetStatusBarLightMode(false) -> res = 1
+            flymeSetStatusBarLightMode(false) -> res = 2
+            Build.VERSION.SDK_INT > Build.VERSION_CODES.M -> {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                res = 3
+            }
         }
     }
     return res
-}
-
-inline fun AppCompatActivity.isColorDark(color: Int): Boolean {
-    if (Color.red(color) == 0xF && Color.green(color) == 0xF && Color.blue(color) == 0xF) {
-        return false
-    }
-    return 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255 >= 0.5
 }
 
