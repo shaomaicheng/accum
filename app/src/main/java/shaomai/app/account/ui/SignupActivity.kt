@@ -3,10 +3,12 @@ package shaomai.app.account.ui
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import org.jetbrains.anko.toast
 import shaomai.app.R
 import shaomai.app.account.constant.KEY_SIGN_TYPE
@@ -28,6 +30,10 @@ class SignupActivity : AppCompatActivity() {
 
     var typeSign:Boolean = false
 
+    companion object {
+        val COUNT_DOWN_MAX = 60
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         statusBarLightMode(lightStatusBar())
@@ -45,8 +51,9 @@ class SignupActivity : AppCompatActivity() {
         binding.gone = View.GONE
         binding.phone = ""
         binding.password = ""
-        binding.interval = 60
+        binding.interval = COUNT_DOWN_MAX
         binding.code = ""
+
     }
 
     fun clickSign(view :View) {
@@ -67,6 +74,26 @@ class SignupActivity : AppCompatActivity() {
             false -> {
                 signIn()
             }
+        }
+    }
+
+    fun sendVerifyCode(view: View) {
+        if ((view as TextView).text.toString() == getString(R.string.send_verify_code)) {
+            viewModel.countDownStart.set(true)
+
+            val countDowner = object : Runnable {
+                override fun run() {
+                    if (binding.interval == 1) {
+                        binding.interval = COUNT_DOWN_MAX
+                        viewModel.countDownStart.set(false)
+                    } else {
+                        binding.interval--
+                        Handler().postDelayed(this, 1000)
+                    }
+                }
+            }
+
+            countDowner.run()
         }
     }
 

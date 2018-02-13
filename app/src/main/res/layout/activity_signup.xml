@@ -109,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="center|left"
-                android:text='@{interval + @string/interval_sign_up}' />
+                android:onClick="sendVerifyCode"
+                android:text='@{viewmodel.countDownStart ? interval + @string/interval_sign_up : @string/send_verify_code}' />
         </LinearLayout>
 
         <Button

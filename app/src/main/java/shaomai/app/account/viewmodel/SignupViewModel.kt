@@ -9,6 +9,7 @@ import android.databinding.ObservableField
 
 class SignupViewModel : ViewModel() {
     var signupType: ObservableField<Boolean> = ObservableField(false)
+    var countDownStart: ObservableField<Boolean> = ObservableField(false)
 
     fun clickSwitchSign() {
         signupType.set(!signupType.get())
