@@ -74,15 +74,19 @@ fun AppCompatActivity.MIUISetStatusBarLightMode(dark: Boolean): Boolean {
     window?.let {
         val clazz: Class<Window> = window.javaClass
         var darkModeFlag = 0
-        val lp = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
-        val field = lp.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE")
-        darkModeFlag = field.getInt(lp)
-        val extraFlagField = clazz.getMethod("setExtraFlags", Int::class.java, Int::class.java)
-        extraFlagField.invoke(window, if (dark) 0 else darkModeFlag, darkModeFlag)
-        res = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility =
-                    if (dark) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else View.SYSTEM_UI_FLAG_VISIBLE
+        try {
+            val lp = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
+            val field = lp.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE")
+            darkModeFlag = field.getInt(lp)
+            val extraFlagField = clazz.getMethod("setExtraFlags", Int::class.java, Int::class.java)
+            extraFlagField.invoke(window, if (dark) 0 else darkModeFlag, darkModeFlag)
+            res = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.decorView.systemUiVisibility =
+                        if (dark) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else View.SYSTEM_UI_FLAG_VISIBLE
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
     return res
@@ -95,16 +99,20 @@ fun AppCompatActivity.flymeSetStatusBarLightMode(dark: Boolean): Boolean {
     var res = false
     window?.let {
         val lp = window.attributes
-        val darkFlag = WindowManager.LayoutParams::class.java.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
-        val meizuFlags = WindowManager.LayoutParams::class.java.getDeclaredField("meizuFlags")
-        darkFlag.isAccessible = true
-        meizuFlags.isAccessible = true
-        val bit = darkFlag.getInt(null)
-        var value = meizuFlags.getInt(lp)
-        value = if (dark) value or bit else value and bit.inv()
-        meizuFlags.setInt(lp, value)
-        window.attributes = lp
-        res = true
+        try {
+            val darkFlag = WindowManager.LayoutParams::class.java.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
+            val meizuFlags = WindowManager.LayoutParams::class.java.getDeclaredField("meizuFlags")
+            darkFlag.isAccessible = true
+            meizuFlags.isAccessible = true
+            val bit = darkFlag.getInt(null)
+            var value = meizuFlags.getInt(lp)
+            value = if (dark) value or bit else value and bit.inv()
+            meizuFlags.setInt(lp, value)
+            window.attributes = lp
+            res = true
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
     return res
 }
