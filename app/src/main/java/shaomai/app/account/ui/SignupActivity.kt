@@ -1,5 +1,6 @@
 package shaomai.app.account.ui
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -28,7 +29,7 @@ class SignupActivity : AppCompatActivity() {
 
     lateinit var viewModel: SignupViewModel
 
-    var typeSign:Boolean = false
+    var typeSign: Boolean = false
 
     companion object {
         val COUNT_DOWN_MAX = 60
@@ -53,10 +54,33 @@ class SignupActivity : AppCompatActivity() {
         binding.password = ""
         binding.interval = COUNT_DOWN_MAX
         binding.code = ""
+        binding.username = ""
+
+
+        subscribeLiveData()
 
     }
 
-    fun clickSign(view :View) {
+    private fun subscribeLiveData() {
+        viewModel.codeError.observe(this, Observer {
+            toast("验证码错误")
+        })
+
+        viewModel.signUpError.observe(this, Observer<String> { message ->
+            message?.let { toast(it) }
+        })
+
+
+        viewModel.signUpSuccess.observe(this, Observer<Boolean> { t ->
+            t?.let {
+                if (it) {
+                    toast("注册成功")
+                }
+            }
+        })
+    }
+
+    fun clickSign(view: View) {
 
 
         Log.i(TAG, "click sign button")
@@ -64,11 +88,12 @@ class SignupActivity : AppCompatActivity() {
         if (TextUtils.isEmpty(binding.phone)
                 || TextUtils.isEmpty(binding.password)) {
             // input is empty, please input !!!
-            toast("请输入用户名或者密码")
+            toast("请输入手机号或者密码")
+            return
         }
 
         when (viewModel.signupType.get()) {
-            true-> {
+            true -> {
                 signUp()
             }
             false -> {
@@ -98,7 +123,22 @@ class SignupActivity : AppCompatActivity() {
     }
 
 
-    fun signUp() {
+    /**
+     * 注册
+     */
+    private fun signUp() {
+
+        if (TextUtils.isEmpty(binding.username)) {
+            toast("请输入用户名")
+            return
+        }
+
+        if (TextUtils.isEmpty(binding.code)) {
+            toast("验证码不能为空")
+            return
+        }
+
+        viewModel.signUp(binding.phone, binding.password, binding.username, binding.code)
 
     }
 

@@ -28,6 +28,10 @@
             type="String" />
 
         <variable
+            name="username"
+            type="String"/>
+
+        <variable
             name="viewmodel"
             type="shaomai.app.account.viewmodel.SignupViewModel"/>
 
@@ -72,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:hint='@{viewmodel.signupType? @string/input_user : @string/input_phone}'
+            android:hint="请输入手机号码"
             android:inputType='number'
             android:text="@={phone}" />
 
@@ -84,6 +88,16 @@
             android:hint="请输入密码"
             android:inputType="textPassword"
             android:text="@={password}" />
+
+        <EditText
+            style="@style/ui_item_account"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="请输入用户名"
+            android:inputType="text"
+            android:text="@={username}"
+            android:visibility="@{viewmodel.signupType? visible: gone}"/>
 
         <LinearLayout
             style="@style/ui_item_account"
@@ -100,7 +114,7 @@
                 android:gravity="center|left"
                 android:hint="验证码"
                 android:inputType="number"
-                android:maxLength="4"
+                android:maxLength="6"
                 android:maxLines="1"
                 android:text="@={code}" />
 
